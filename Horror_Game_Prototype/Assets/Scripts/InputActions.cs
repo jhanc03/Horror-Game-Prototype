@@ -34,7 +34,25 @@ public partial class @PlayerInputActions: IInputActionCollection2, IDisposable
                     ""expectedControlType"": ""Button"",
                     ""processors"": """",
                     ""interactions"": """",
-                    ""initialStateCheck"": true
+                    ""initialStateCheck"": false
+                },
+                {
+                    ""name"": ""ToggleLeftDoor"",
+                    ""type"": ""Button"",
+                    ""id"": ""2bca4275-f499-41e2-a023-b5aa0362bee6"",
+                    ""expectedControlType"": ""Button"",
+                    ""processors"": """",
+                    ""interactions"": """",
+                    ""initialStateCheck"": false
+                },
+                {
+                    ""name"": ""ToggleRightDoor"",
+                    ""type"": ""Button"",
+                    ""id"": ""3ba2b56e-fceb-47b2-9ead-265b24f3ebb4"",
+                    ""expectedControlType"": ""Button"",
+                    ""processors"": """",
+                    ""interactions"": """",
+                    ""initialStateCheck"": false
                 }
             ],
             ""bindings"": [
@@ -46,6 +64,28 @@ public partial class @PlayerInputActions: IInputActionCollection2, IDisposable
                     ""processors"": """",
                     ""groups"": ""Controls"",
                     ""action"": ""ToggleCameras"",
+                    ""isComposite"": false,
+                    ""isPartOfComposite"": false
+                },
+                {
+                    ""name"": """",
+                    ""id"": ""9be0e8c7-03d8-495e-982a-77f6ef0ec4c5"",
+                    ""path"": ""<Keyboard>/a"",
+                    ""interactions"": """",
+                    ""processors"": """",
+                    ""groups"": ""Controls"",
+                    ""action"": ""ToggleLeftDoor"",
+                    ""isComposite"": false,
+                    ""isPartOfComposite"": false
+                },
+                {
+                    ""name"": """",
+                    ""id"": ""f0543b17-3580-465d-a352-a5730fe6ef11"",
+                    ""path"": ""<Keyboard>/d"",
+                    ""interactions"": """",
+                    ""processors"": """",
+                    ""groups"": ""Controls"",
+                    ""action"": ""ToggleRightDoor"",
                     ""isComposite"": false,
                     ""isPartOfComposite"": false
                 }
@@ -63,6 +103,8 @@ public partial class @PlayerInputActions: IInputActionCollection2, IDisposable
         // Controls
         m_Controls = asset.FindActionMap("Controls", throwIfNotFound: true);
         m_Controls_ToggleCameras = m_Controls.FindAction("ToggleCameras", throwIfNotFound: true);
+        m_Controls_ToggleLeftDoor = m_Controls.FindAction("ToggleLeftDoor", throwIfNotFound: true);
+        m_Controls_ToggleRightDoor = m_Controls.FindAction("ToggleRightDoor", throwIfNotFound: true);
     }
 
     public void Dispose()
@@ -125,11 +167,15 @@ public partial class @PlayerInputActions: IInputActionCollection2, IDisposable
     private readonly InputActionMap m_Controls;
     private List<IControlsActions> m_ControlsActionsCallbackInterfaces = new List<IControlsActions>();
     private readonly InputAction m_Controls_ToggleCameras;
+    private readonly InputAction m_Controls_ToggleLeftDoor;
+    private readonly InputAction m_Controls_ToggleRightDoor;
     public struct ControlsActions
     {
         private @PlayerInputActions m_Wrapper;
         public ControlsActions(@PlayerInputActions wrapper) { m_Wrapper = wrapper; }
         public InputAction @ToggleCameras => m_Wrapper.m_Controls_ToggleCameras;
+        public InputAction @ToggleLeftDoor => m_Wrapper.m_Controls_ToggleLeftDoor;
+        public InputAction @ToggleRightDoor => m_Wrapper.m_Controls_ToggleRightDoor;
         public InputActionMap Get() { return m_Wrapper.m_Controls; }
         public void Enable() { Get().Enable(); }
         public void Disable() { Get().Disable(); }
@@ -142,6 +188,12 @@ public partial class @PlayerInputActions: IInputActionCollection2, IDisposable
             @ToggleCameras.started += instance.OnToggleCameras;
             @ToggleCameras.performed += instance.OnToggleCameras;
             @ToggleCameras.canceled += instance.OnToggleCameras;
+            @ToggleLeftDoor.started += instance.OnToggleLeftDoor;
+            @ToggleLeftDoor.performed += instance.OnToggleLeftDoor;
+            @ToggleLeftDoor.canceled += instance.OnToggleLeftDoor;
+            @ToggleRightDoor.started += instance.OnToggleRightDoor;
+            @ToggleRightDoor.performed += instance.OnToggleRightDoor;
+            @ToggleRightDoor.canceled += instance.OnToggleRightDoor;
         }
 
         private void UnregisterCallbacks(IControlsActions instance)
@@ -149,6 +201,12 @@ public partial class @PlayerInputActions: IInputActionCollection2, IDisposable
             @ToggleCameras.started -= instance.OnToggleCameras;
             @ToggleCameras.performed -= instance.OnToggleCameras;
             @ToggleCameras.canceled -= instance.OnToggleCameras;
+            @ToggleLeftDoor.started -= instance.OnToggleLeftDoor;
+            @ToggleLeftDoor.performed -= instance.OnToggleLeftDoor;
+            @ToggleLeftDoor.canceled -= instance.OnToggleLeftDoor;
+            @ToggleRightDoor.started -= instance.OnToggleRightDoor;
+            @ToggleRightDoor.performed -= instance.OnToggleRightDoor;
+            @ToggleRightDoor.canceled -= instance.OnToggleRightDoor;
         }
 
         public void RemoveCallbacks(IControlsActions instance)
@@ -178,5 +236,7 @@ public partial class @PlayerInputActions: IInputActionCollection2, IDisposable
     public interface IControlsActions
     {
         void OnToggleCameras(InputAction.CallbackContext context);
+        void OnToggleLeftDoor(InputAction.CallbackContext context);
+        void OnToggleRightDoor(InputAction.CallbackContext context);
     }
 }

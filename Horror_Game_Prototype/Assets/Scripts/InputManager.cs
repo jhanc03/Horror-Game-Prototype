@@ -8,8 +8,7 @@ public class InputManager : MonoBehaviour
     GameController gameController;
 
     public PlayerInputActions playerControls;
-
-    private InputAction toggleCameras;
+    private InputAction toggleCameras, toggleLeftDoor, toggleRightDoor;
 
     private void Awake()
     {
@@ -21,6 +20,14 @@ public class InputManager : MonoBehaviour
         toggleCameras = playerControls.Controls.ToggleCameras;
         toggleCameras.Enable();
         toggleCameras.performed += ToggleCameras;
+
+        toggleLeftDoor = playerControls.Controls.ToggleLeftDoor;
+        toggleLeftDoor.Enable();
+        toggleLeftDoor.performed += ToggleLeftDoor;
+
+        toggleRightDoor = playerControls.Controls.ToggleRightDoor;
+        toggleRightDoor.Enable();
+        toggleRightDoor.performed += ToggleRightDoor;
     }
 
     private void OnDisable()
@@ -37,11 +44,20 @@ public class InputManager : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        
+
     }
 
     private void ToggleCameras(InputAction.CallbackContext context)
     {
         gameController.ToggleCameras();
+    }
+    private void ToggleLeftDoor(InputAction.CallbackContext context)
+    {
+        gameController.ToggleLeftDoor();
+    }
+
+    private void ToggleRightDoor(InputAction.CallbackContext context)
+    {
+        gameController.ToggleRightDoor();
     }
 }

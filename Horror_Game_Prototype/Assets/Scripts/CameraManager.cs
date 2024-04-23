@@ -1,7 +1,6 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
-using UnityEngine.InputSystem;
 using UnityEngine.Video;
 
 public class CameraManager : MonoBehaviour
@@ -10,6 +9,7 @@ public class CameraManager : MonoBehaviour
     List<Camera> cameras = new List<Camera>();
     int lastCamera;
     VideoPlayer cameraStatic;
+    CanvasGroup cameraUI;
 
     // Start is called before the first frame update
     void Start()
@@ -28,6 +28,7 @@ public class CameraManager : MonoBehaviour
         lastCamera = 6;
 
         cameraStatic = camerasGameObject.GetComponent<VideoPlayer>();
+        cameraUI = GameObject.FindGameObjectWithTag("UI").GetComponent<CanvasGroup>();
     }
 
     // Update is called once per frame
@@ -42,11 +43,15 @@ public class CameraManager : MonoBehaviour
         {
             cameras[0].enabled = false;
             cameras[lastCamera].enabled = true;
+            cameraUI.alpha = 1.0f;
+            cameraUI.interactable = true;
         }
         else
         {
             cameras[lastCamera].enabled = false;
             cameras[0].enabled = true;
+            cameraUI.alpha = 0.0f;
+            cameraUI.interactable = false;
         }
     }
 
@@ -55,7 +60,6 @@ public class CameraManager : MonoBehaviour
 
     public void Camera1Click()
     {
-        Debug.Log("Camera 1 clicked.");
         cameras[1].enabled = true;
         cameras[lastCamera].enabled = false;
         cameraStatic.targetCamera = cameras[1];
@@ -63,7 +67,6 @@ public class CameraManager : MonoBehaviour
     }
     public void Camera2Click()
     {
-        Debug.Log("Camera 2 clicked.");
         cameras[2].enabled = true;  
         cameras[lastCamera].enabled = false;
         cameraStatic.targetCamera = cameras[2];
@@ -71,7 +74,6 @@ public class CameraManager : MonoBehaviour
     }
     public void Camera3Click()
     {
-        Debug.Log("Camera 3 clicked.");
         cameras[3].enabled = true;
         cameras[lastCamera].enabled = false;
         cameraStatic.targetCamera = cameras[3];
@@ -79,7 +81,6 @@ public class CameraManager : MonoBehaviour
     }
     public void Camera4Click()
     {
-        Debug.Log("Camera 4 clicked.");
         cameras[4].enabled = true;
         cameras[lastCamera].enabled = false;
         cameraStatic.targetCamera = cameras[4];
@@ -87,7 +88,6 @@ public class CameraManager : MonoBehaviour
     }
     public void Camera5Click()
     {
-        Debug.Log("Camera 5 clicked.");
         cameras[5].enabled = true;
         cameras[lastCamera].enabled = false;
         cameraStatic.targetCamera = cameras[5];
@@ -95,7 +95,6 @@ public class CameraManager : MonoBehaviour
     }
     public void Camera6Click()
     {
-        Debug.Log("Camera 6 clicked.");
         cameras[6].enabled = true;
         cameras[lastCamera].enabled = false;
         cameraStatic.targetCamera = cameras[6];
