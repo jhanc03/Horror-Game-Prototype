@@ -1,0 +1,40 @@
+{
+    "name": "PlayerInputActions",
+    "maps": [
+        {
+            "name": "Controls",
+            "id": "6e9eed07-a8fc-46c2-b447-9a0cf16c210c",
+            "actions": [
+                {
+                    "name": "ToggleCameras",
+                    "type": "Button",
+                    "id": "e1b12a70-dca9-4ffe-83ef-f6c2e9859f7d",
+                    "expectedControlType": "Button",
+                    "processors": "",
+                    "interactions": "",
+                    "initialStateCheck": true
+                }
+            ],
+            "bindings": [
+                {
+                    "name": "",
+                    "id": "c4c5fb4f-228f-4c88-8fc1-d94c3790fcbf",
+                    "path": "<Keyboard>/w",
+                    "interactions": "",
+                    "processors": "",
+                    "groups": "Controls",
+                    "action": "ToggleCameras",
+                    "isComposite": false,
+                    "isPartOfComposite": false
+                }
+            ]
+        }
+    ],
+    "controlSchemes": [
+        {
+            "name": "Controls",
+            "bindingGroup": "Controls",
+            "devices": []
+        }
+    ]
+}

@@ -17,4 +17,11 @@ public class GameController : MonoBehaviour
     {
         
     }
+
+    //Controls
+
+    public void ToggleCameras()
+    {
+        cameraManager.ToggleCameras();
+    }
 }

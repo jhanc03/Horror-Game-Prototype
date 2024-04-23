@@ -5,10 +5,33 @@ using UnityEngine.InputSystem;
 
 public class InputManager : MonoBehaviour
 {
+    GameController gameController;
+
+    public PlayerInputActions playerControls;
+
+    private InputAction toggleCameras;
+
+    private void Awake()
+    {
+        playerControls = new PlayerInputActions();
+    }
+
+    private void OnEnable()
+    {
+        toggleCameras = playerControls.Controls.ToggleCameras;
+        toggleCameras.Enable();
+        toggleCameras.performed += ToggleCameras;
+    }
+
+    private void OnDisable()
+    {
+        toggleCameras.Disable();
+    }
+
     // Start is called before the first frame update
     void Start()
     {
-        
+        gameController = GetComponent<GameController>();
     }
 
     // Update is called once per frame
@@ -17,11 +40,8 @@ public class InputManager : MonoBehaviour
         
     }
 
-    //Inputs
-    //https://docs.unity.cn/Packages/com.unity.inputsystem@1.3/manual/QuickStartGuide.html#getting-input-indirectly-through-an-input-action
-
-    public void OpenCameras(InputAction.CallbackContext context)
+    private void ToggleCameras(InputAction.CallbackContext context)
     {
-
+        gameController.ToggleCameras();
     }
 }
