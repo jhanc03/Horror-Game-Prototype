@@ -54,7 +54,8 @@ public class GameController : MonoBehaviour
         if (rDoorClosing)
         {
             rDoor.Rotate(Vector3.up, -(doorRotSpeed * Time.deltaTime));
-            if (rDoor.localEulerAngles.y > 0.0f && rDoor.localEulerAngles.y < 3.0f)
+            Debug.Log(rDoor.localEulerAngles.y);
+            if (rDoor.localEulerAngles.y > 0.0f && rDoor.localEulerAngles.y < 1.0f)
             {
                 rDoor.localEulerAngles = Vector3.zero;
                 rDoorClosing = false;
@@ -71,6 +72,8 @@ public class GameController : MonoBehaviour
                 rDoorClosed = false;
             }
         }
+
+    //https://docs.unity3d.com/Manual/ProgressiveLightmapper-UVOverlap.html
 
     }
 
