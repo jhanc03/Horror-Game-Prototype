@@ -13,7 +13,8 @@ public class GameController : MonoBehaviour
     //Doors
     public Transform lDoor, rDoor;
     bool lDoorClosed, rDoorClosed,
-         lDoorClosing, lDoorOpening, rDoorClosing, rDoorOpening;
+         lDoorClosing, lDoorOpening, rDoorClosing, rDoorOpening,
+         camerasUp, jumpscareReady;
     const float doorRotSpeed = 63.41f;
 
     // Start is called before the first frame update
@@ -27,54 +28,71 @@ public class GameController : MonoBehaviour
         lDoorOpening = false;
         rDoorClosing = false;
         rDoorOpening = false;
+
+        camerasUp = false;
+        jumpscareReady = false;
     }
 
     // Update is called once per frame
     void Update()
     {
-        //Doors
-        //https://docs.unity3d.com/ScriptReference/Transform.Rotate.html
-        if (lDoorClosing)
+        //Jumpscare
+        if (jumpscareReady)
         {
-            lDoor.Rotate(Vector3.up, doorRotSpeed * Time.deltaTime);
-            if (lDoor.localEulerAngles.y > 0.0f && lDoor.localEulerAngles.y < 3.0f)
+            if (!camerasUp)
             {
-                lDoor.localEulerAngles = Vector3.zero;
-                lDoorClosing = false;
-                lDoorClosed = true;
+                //Jumpscare
+            }
+            else
+            {
+                //Play breathing sound?
             }
         }
-        else if (lDoorOpening)
+        else
         {
-            lDoor.Rotate(Vector3.up, -(doorRotSpeed * Time.deltaTime));
-            if (lDoor.localEulerAngles.y < 296.59f && lDoor.localEulerAngles.y > 293.59f)
+            //Doors
+            //https://docs.unity3d.com/ScriptReference/Transform.Rotate.html
+            if (lDoorClosing)
             {
-                lDoor.localEulerAngles = new Vector3(0, 296.59f, 0);
-                lDoorOpening = false;
-                lDoorClosed = false;
+                lDoor.Rotate(Vector3.up, doorRotSpeed * Time.deltaTime);
+                if (lDoor.localEulerAngles.y > 0.0f && lDoor.localEulerAngles.y < 3.0f)
+                {
+                    lDoor.localEulerAngles = Vector3.zero;
+                    lDoorClosing = false;
+                    lDoorClosed = true;
+                }
+            }
+            else if (lDoorOpening)
+            {
+                lDoor.Rotate(Vector3.up, -(doorRotSpeed * Time.deltaTime));
+                if (lDoor.localEulerAngles.y < 296.59f && lDoor.localEulerAngles.y > 293.59f)
+                {
+                    lDoor.localEulerAngles = new Vector3(0, 296.59f, 0);
+                    lDoorOpening = false;
+                    lDoorClosed = false;
+                }
+            }
+            if (rDoorClosing)
+            {
+                rDoor.Rotate(Vector3.up, -(doorRotSpeed * Time.deltaTime));
+                if (rDoor.localEulerAngles.y > 0.0f && rDoor.localEulerAngles.y < 1.0f)
+                {
+                    rDoor.localEulerAngles = Vector3.zero;
+                    rDoorClosing = false;
+                    rDoorClosed = true;
+                }
+            }
+            else if (rDoorOpening)
+            {
+                rDoor.Rotate(Vector3.up, doorRotSpeed * Time.deltaTime);
+                if (rDoor.localEulerAngles.y > 63.41f && rDoor.localEulerAngles.y < 66.41f)
+                {
+                    rDoor.localEulerAngles = new Vector3(0, 63.41f, 0);
+                    rDoorOpening = false;
+                    rDoorClosed = false;
+                }
             }
         }
-        if (rDoorClosing)
-        {
-            rDoor.Rotate(Vector3.up, -(doorRotSpeed * Time.deltaTime));
-            if (rDoor.localEulerAngles.y > 0.0f && rDoor.localEulerAngles.y < 1.0f)
-            {
-                rDoor.localEulerAngles = Vector3.zero;
-                rDoorClosing = false;
-                rDoorClosed = true;
-            }
-        }
-        else if (rDoorOpening)
-        {
-            rDoor.Rotate(Vector3.up, doorRotSpeed * Time.deltaTime);
-            if (rDoor.localEulerAngles.y > 63.41f && rDoor.localEulerAngles.y < 66.41f)
-            {
-                rDoor.localEulerAngles = new Vector3(0, 63.41f, 0);
-                rDoorOpening = false;
-                rDoorClosed = false;
-            }
-        }
-
 	}
 
     public bool GetLDoorClosed()
@@ -88,18 +106,19 @@ public class GameController : MonoBehaviour
 
     public void JumpscareReady()
     {
-
+        jumpscareReady = true;
     }
 
 	//Controls
 	public void ToggleCameras()
     {
         cameraManager.ToggleCameras();
+        camerasUp = !camerasUp;
     }
 
 	public void ToggleLeftDoor()
     {
-        if (!(lDoorClosing || lDoorOpening))
+        if (!(lDoorClosing || lDoorOpening) && !camerasUp)
         {
             if (lDoorClosed)
             {
@@ -113,7 +132,7 @@ public class GameController : MonoBehaviour
     }
     public void ToggleRightDoor()
     {
-        if (!(rDoorClosing || rDoorOpening))
+        if (!(rDoorClosing || rDoorOpening) && !camerasUp)
         {
             if (rDoorClosed)
             {

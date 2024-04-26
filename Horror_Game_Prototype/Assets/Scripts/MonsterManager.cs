@@ -197,6 +197,7 @@ public class MonsterManager : MonoBehaviour
                 UpdateMonsterPosition(currentRoom, currentRoomPosition);
             }
 
+
             MOTimer = 0.0f;
             choosePos = true;
         }
