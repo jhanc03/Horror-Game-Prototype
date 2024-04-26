@@ -1,4 +1,5 @@
 using System;
+using Unity.VisualScripting;
 using UnityEngine;
 using UnityStandardAssets.CrossPlatformInput;
 
@@ -12,6 +13,8 @@ namespace UnityStandardAssets.Characters.FirstPerson
         public bool clampVerticalRotation = true;
         public float MinimumX = -90F;
         public float MaximumX = 90F;
+        public float MinimumY = -90F;
+        public float MaximumY = 90F;
         public bool smooth;
         public float smoothTime = 5f;
 
@@ -37,6 +40,7 @@ namespace UnityStandardAssets.Characters.FirstPerson
 
             if(clampVerticalRotation)
                 m_CameraTargetRot = ClampRotationAroundXAxis (m_CameraTargetRot);
+            m_CharacterTargetRot = ClampRotationAroundYAxis (m_CharacterTargetRot);
 
             if(smooth)
             {
@@ -69,5 +73,20 @@ namespace UnityStandardAssets.Characters.FirstPerson
             return q;
         }
 
+        Quaternion ClampRotationAroundYAxis(Quaternion q)
+        {
+            q.x /= q.w;
+            q.y /= q.w;
+            q.z /= q.w;
+            q.w = 1.0f;
+
+            float angleY = 2.0f * Mathf.Rad2Deg * Mathf.Atan(q.y);
+
+            angleY = Mathf.Clamp(angleY, MinimumY, MaximumY);
+
+            q.y = Mathf.Tan(0.5f * Mathf.Deg2Rad * angleY);
+
+            return q;
+        }
     }
 }
