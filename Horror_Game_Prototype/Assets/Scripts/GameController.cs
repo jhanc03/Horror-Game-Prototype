@@ -49,7 +49,7 @@ public class GameController : MonoBehaviour
 
 		camerasUp = false;
 		jumpscareReady = false;
-		power = 100;
+		power = 5;
 		powerTimer = 0.0f;
 	}
 
@@ -152,6 +152,8 @@ public class GameController : MonoBehaviour
             rDoorOpening = true;
 			officeSfx.PlayOneShot(powerDown, 0.8f);
 			poweredDown = true;
+
+			//Turn off lights
         }
     }
 
