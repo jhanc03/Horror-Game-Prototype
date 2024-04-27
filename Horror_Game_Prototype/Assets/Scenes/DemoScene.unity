@@ -1571,6 +1571,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 54008d84f8a0c5c4e9f52b08c73ecf36, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  powerDown: {fileID: 0}
   lDoor: {fileID: 1048468086}
   rDoor: {fileID: 97576838}
 --- !u!114 &147335207
@@ -1611,8 +1612,9 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   respawn: {fileID: 8300000, guid: 1bd6e5b4ce3c946f4a3f8f53a207ec93, type: 3}
-  breathing: {fileID: 8300000, guid: b6254c0772d293c42be31bf0e68b8cf0, type: 3}
-  breathing2: {fileID: 8300000, guid: 1e6e369029d8ad9499f012dece9da162, type: 3}
+  breathing1: {fileID: 8300000, guid: ab6850659b1264a8a8de37a637c5507f, type: 3}
+  breathing2: {fileID: 8300000, guid: 79a487faa751a46eebd8a8358c7dea4d, type: 3}
+  breathing3: {fileID: 8300000, guid: f3fa3fbe90ff54736b75b2dbbfe46081, type: 3}
   hit1: {fileID: 8300000, guid: 4104495a448805b4e94dc83af000e0f6, type: 3}
   hit2: {fileID: 8300000, guid: 862e32085adc29949a12fee9d1ff11a0, type: 3}
   jumpscare: {fileID: 8300000, guid: 5fdb461555f214ae3854e33eaa45ee3f, type: 3}
@@ -2322,7 +2324,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 186052, guid: 2fa97d29375bda64080d41087c0c107c, type: 3}
       propertyPath: m_IsActive
-      value: 0
+      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 428016, guid: 2fa97d29375bda64080d41087c0c107c, type: 3}
       propertyPath: m_LocalScale.x
@@ -2379,6 +2381,10 @@ PrefabInstance:
     - target: {fileID: 428016, guid: 2fa97d29375bda64080d41087c0c107c, type: 3}
       propertyPath: m_ConstrainProportionsScale
       value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 10854756, guid: 2fa97d29375bda64080d41087c0c107c, type: 3}
+      propertyPath: m_Lightmapping
+      value: 2
       objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
@@ -4489,6 +4495,14 @@ PrefabInstance:
       propertyPath: m_projectionMatrixMode
       value: 1
       objectReference: {fileID: 0}
+    - target: {fileID: 8200000, guid: 5e9e851c0e142814dac026a256ba2ac0, type: 3}
+      propertyPath: m_Enabled
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 8200000, guid: 5e9e851c0e142814dac026a256ba2ac0, type: 3}
+      propertyPath: panLevelCustomCurve.m_Curve.Array.data[0].value
+      value: 0
+      objectReference: {fileID: 0}
     - target: {fileID: 11400000, guid: 5e9e851c0e142814dac026a256ba2ac0, type: 3}
       propertyPath: m_Enabled
       value: 1
@@ -5801,8 +5815,8 @@ AudioSource:
   SpatializePostEffects: 0
   Priority: 128
   DopplerLevel: 1
-  MinDistance: 10
-  MaxDistance: 500
+  MinDistance: 1
+  MaxDistance: 30
   Pan2D: 0
   rolloffMode: 0
   BypassEffects: 0
@@ -5846,7 +5860,7 @@ AudioSource:
     m_Curve:
     - serializedVersion: 3
       time: 0
-      value: 0
+      value: 1
       inSlope: 0
       outSlope: 0
       tangentMode: 0
@@ -6443,6 +6457,10 @@ PrefabInstance:
       propertyPath: m_Name
       value: DWallWDoor
       objectReference: {fileID: 0}
+    - target: {fileID: 1866391241048832658, guid: e69b97e28490a6f46b4b9d10b980d071, type: 3}
+      propertyPath: m_CastShadows
+      value: 0
+      objectReference: {fileID: 0}
     - target: {fileID: 1866391241050983680, guid: e69b97e28490a6f46b4b9d10b980d071, type: 3}
       propertyPath: m_LocalRotation.w
       value: 0.8507653
@@ -6611,6 +6629,10 @@ PrefabInstance:
     - target: {fileID: 675473187312682079, guid: cb442aadba333cd4eadf766008913d40, type: 3}
       propertyPath: m_Name
       value: DWallWDoorR
+      objectReference: {fileID: 0}
+    - target: {fileID: 1866391241048832658, guid: cb442aadba333cd4eadf766008913d40, type: 3}
+      propertyPath: m_CastShadows
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 1866391241050983680, guid: cb442aadba333cd4eadf766008913d40, type: 3}
       propertyPath: m_LocalRotation.w
@@ -8735,7 +8757,7 @@ PrefabInstance:
     m_Modifications:
     - target: {fileID: 3664060892731258530, guid: ce200e45675ae64489940bebe3adfe04, type: 3}
       propertyPath: m_LocalPosition.x
-      value: 3.1590767
+      value: 3.155
       objectReference: {fileID: 0}
     - target: {fileID: 3664060892731258530, guid: ce200e45675ae64489940bebe3adfe04, type: 3}
       propertyPath: m_LocalPosition.y
@@ -9919,10 +9941,10 @@ AudioSource:
   SpatializePostEffects: 0
   Priority: 128
   DopplerLevel: 1
-  MinDistance: 50
-  MaxDistance: 500
+  MinDistance: 1
+  MaxDistance: 40
   Pan2D: 0
-  rolloffMode: 1
+  rolloffMode: 0
   BypassEffects: 0
   BypassListenerEffects: 0
   BypassReverbZones: 0
@@ -9930,23 +9952,68 @@ AudioSource:
     serializedVersion: 2
     m_Curve:
     - serializedVersion: 3
-      time: 0
+      time: 0.02
       value: 1
-      inSlope: 0
-      outSlope: 0
+      inSlope: -50.01992
+      outSlope: -50.01992
       tangentMode: 0
       weightedMode: 0
-      inWeight: 0.33333334
-      outWeight: 0.33333334
+      inWeight: 0
+      outWeight: 0
+    - serializedVersion: 3
+      time: 0.04
+      value: 0.5
+      inSlope: -12.50498
+      outSlope: -12.50498
+      tangentMode: 0
+      weightedMode: 0
+      inWeight: 0
+      outWeight: 0
+    - serializedVersion: 3
+      time: 0.08
+      value: 0.25
+      inSlope: -3.126245
+      outSlope: -3.126245
+      tangentMode: 0
+      weightedMode: 0
+      inWeight: 0
+      outWeight: 0
+    - serializedVersion: 3
+      time: 0.16
+      value: 0.125
+      inSlope: -0.78156126
+      outSlope: -0.78156126
+      tangentMode: 0
+      weightedMode: 0
+      inWeight: 0
+      outWeight: 0
+    - serializedVersion: 3
+      time: 0.32
+      value: 0.0625
+      inSlope: -0.19539031
+      outSlope: -0.19539031
+      tangentMode: 0
+      weightedMode: 0
+      inWeight: 0
+      outWeight: 0
+    - serializedVersion: 3
+      time: 0.64
+      value: 0.03125
+      inSlope: -0.04884758
+      outSlope: -0.04884758
+      tangentMode: 0
+      weightedMode: 0
+      inWeight: 0
+      outWeight: 0
     - serializedVersion: 3
       time: 1
-      value: 0
-      inSlope: 0
-      outSlope: 0
+      value: 0.02
+      inSlope: -0.020007975
+      outSlope: -0.020007975
       tangentMode: 0
       weightedMode: 0
-      inWeight: 0.33333334
-      outWeight: 0.33333334
+      inWeight: 0
+      outWeight: 0
     m_PreInfinity: 2
     m_PostInfinity: 2
     m_RotationOrder: 4
@@ -9955,7 +10022,7 @@ AudioSource:
     m_Curve:
     - serializedVersion: 3
       time: 0
-      value: 0
+      value: 1
       inSlope: 0
       outSlope: 0
       tangentMode: 0

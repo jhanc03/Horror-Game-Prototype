@@ -1,7 +1,9 @@
+using System;
 using System.Collections;
 using System.Collections.Generic;
 using Unity.VisualScripting;
 using UnityEngine;
+using UnityEngine.SceneManagement;
 using Random = UnityEngine.Random;
 
 public class GameController : MonoBehaviour
@@ -10,6 +12,10 @@ public class GameController : MonoBehaviour
 
 	CameraManager cameraManager;
 	MonsterManager monsterManager;
+
+	AudioSource officeSfx;
+	public AudioClip powerDown;
+	bool poweredDown = false;
 
 	//Doors
 	public Transform lDoor, rDoor;
@@ -21,13 +27,18 @@ public class GameController : MonoBehaviour
 	int power;
 	float powerDrainRate = 5.0f, powerTimer;
 
-	float jumpscareTimer = 3.0f;
+	float jumpscareTimer = 1.0f;
+
+	float gameTimer = 0.0f, gameEnd = 240f;
 
 	// Start is called before the first frame update
 	void Start()
 	{
-		cameraManager = GetComponent<CameraManager>();
+		Random.InitState((int)DateTime.Now.Ticks);
+
+        cameraManager = GetComponent<CameraManager>();
 		monsterManager = GetComponent<MonsterManager>();
+		officeSfx = GameObject.FindGameObjectWithTag("Player").GetComponent<AudioSource>();
 		
 		lDoorClosed = false;
 		rDoorClosed = false;
@@ -45,6 +56,12 @@ public class GameController : MonoBehaviour
 	// Update is called once per frame
 	void Update()
 	{
+		gameTimer += Time.deltaTime;
+		if (gameTimer > gameEnd)
+		{
+			//Win
+		}
+
 		//Jumpscare
 		if (jumpscareReady)
 		{
@@ -63,7 +80,8 @@ public class GameController : MonoBehaviour
 					jumpscareTimer -= Time.deltaTime;
 					if (jumpscareTimer < 0)
 					{
-						//End game
+						//Lose
+						Application.Quit();
 					}
 				}
             }
@@ -125,7 +143,17 @@ public class GameController : MonoBehaviour
 			power--;
 			powerTimer = 0.0f;
 		}
-	}
+        if (power <= 0 && !poweredDown)
+        {
+			//Power out
+			lDoorClosing = false;
+			lDoorOpening = true;
+            rDoorClosing = false;
+            rDoorOpening = true;
+			officeSfx.PlayOneShot(powerDown, 0.8f);
+			poweredDown = true;
+        }
+    }
 
 	public bool GetLDoorClosed()
 	{
@@ -144,21 +172,24 @@ public class GameController : MonoBehaviour
 	//Controls
 	public void ToggleCameras()
 	{
-		cameraManager.ToggleCameras();
-		if (camerasUp)
+		if (!poweredDown)
 		{
-			powerDrainRate += 1.0f;
+			cameraManager.ToggleCameras();
+			if (camerasUp)
+			{
+				powerDrainRate += 1.0f;
+			}
+			else
+			{
+				powerDrainRate -= 1.0f;
+			}
+			camerasUp = !camerasUp;
 		}
-		else
-		{
-			powerDrainRate -= 1.0f;
-		}
-		camerasUp = !camerasUp;
 	}
 
 	public void ToggleLeftDoor()
 	{
-		if (!(lDoorClosing || lDoorOpening) && !camerasUp)
+		if (!(lDoorClosing || lDoorOpening) && !camerasUp && !poweredDown)
 		{
 			if (lDoorClosed)
 			{
@@ -174,7 +205,7 @@ public class GameController : MonoBehaviour
 	}
 	public void ToggleRightDoor()
 	{
-		if (!(rDoorClosing || rDoorOpening) && !camerasUp)
+		if (!(rDoorClosing || rDoorOpening) && !camerasUp && !poweredDown)
 		{
 			if (rDoorClosed)
 			{
