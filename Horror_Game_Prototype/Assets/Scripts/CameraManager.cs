@@ -2,6 +2,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.Video;
+using UnityStandardAssets.Characters.FirstPerson;
 
 public class CameraManager : MonoBehaviour
 {
@@ -55,8 +56,15 @@ public class CameraManager : MonoBehaviour
         }
     }
 
+    public void PlayerLookAtJumpscare()
+    {
+        cameras[0].transform.LookAt(new Vector3(-100, 0, 0));
+        FirstPersonController player = GameObject.FindGameObjectWithTag("Player").GetComponent<FirstPersonController>();
+        player.m_MouseLook.MinimumY = -90.0f;
+        player.m_MouseLook.MaximumY = -90.0f;
+    }
+
     //Camera clicks
-    //if (lastCamera !=
 
     public void Camera1Click()
     {
