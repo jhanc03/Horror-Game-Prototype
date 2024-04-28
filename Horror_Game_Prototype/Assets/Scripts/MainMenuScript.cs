@@ -1,18 +1,21 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
-using UnityEngine.UIElements;
+using UnityEngine.SceneManagement;
+using UnityEngine.UI;
 
 public class MainMenuScript : MonoBehaviour
 {
     public static float volumeLevel;
+    public static bool jumpscare;
 
-    Slider volumeSlider;
+    public Slider volumeSlider;
+    public Toggle jumpscareToggle;
 
     // Start is called before the first frame update
     void Start()
     {
-        volumeSlider = GetComponentInChildren<Slider>();
+        
     }
 
     // Update is called once per frame
@@ -21,8 +24,10 @@ public class MainMenuScript : MonoBehaviour
         
     }
 
-    public void VolumeSliderChanged()
+    public void StartGame()
     {
         volumeLevel = volumeSlider.value;
+        jumpscare = jumpscareToggle.isOn;
+        SceneManager.LoadScene(1);
     }
 }

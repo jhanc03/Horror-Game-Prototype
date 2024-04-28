@@ -4,8 +4,6 @@ using UnityEngine;
 
 public class MonsterManager : MonoBehaviour
 {
-    public float volumeLevel;
-
     struct RoomPositions
     {
         public int numPos;
@@ -58,7 +56,7 @@ public class MonsterManager : MonoBehaviour
         cam4 = new RoomPositions(new List<Vector3> { new Vector3(-29.701f, 0, 16.708f), new Vector3(-20.894f, 0, 17.264f) }, new List<float> { 128.179f, -146.098f }, new List<string> { "Idle2", "Idle2" });
         cam5 = new RoomPositions(new List<Vector3> { new Vector3(-26.231f, 0, 10.193f), new Vector3(-23.314f, 0, -7.945f) }, new List<float> { 168.267f, 219.431f }, new List<string> { "Idle1", "ReachOut2" });
         cam6 = new RoomPositions(new List<Vector3> { new Vector3(-28.147f, 0, 18.667f), new Vector3(-30.024f, 0, 20.738f) }, new List<float> { 301.821f, 244.604f }, new List<string> { "LieDown", "LieDown" });
-        office = new RoomPositions(new List<Vector3> { new Vector3(0.0f, 0, 0.0f) }, new List<float> { 90.0f }, new List<string> { "Jumpscare" }); //Might have to change
+        office = new RoomPositions(new List<Vector3> { new Vector3(0.0f, 0, 0.0f) }, new List<float> { 90.0f }, new List<string> { "Jumpscare" });
 
         roomPositions = new List<RoomPositions>();
         roomPositions.Add(lDoor);
@@ -82,14 +80,14 @@ public class MonsterManager : MonoBehaviour
         currentRoomPosition = 1;
         UpdateMonsterPosition(currentRoom, currentRoomPosition);
 
-        audioSource.volume = volumeLevel;
-        audioSource2.volume = volumeLevel;
+        audioSource.volume = MainMenuScript.volumeLevel;
+        audioSource2.volume = MainMenuScript.volumeLevel;
     }
 
     void Update()
     {
         MOTimer += Time.deltaTime;
-        if (MOTimer > MOThreshold && !jumpscareReady)
+        if (MOTimer > MOThreshold && !jumpscareReady && !gameController.won)
         {
             int randomNumber = Random.Range(0, 20);
             if (randomNumber < DC)
@@ -104,7 +102,7 @@ public class MonsterManager : MonoBehaviour
                         {
                             //Door is closed, go back to start
                             currentRoom = 7;
-                            moveSfx = 0.8f;
+                            moveSfx = 0.64f;
                             clipToPlay = respawn;
                         }
                         else
@@ -122,7 +120,7 @@ public class MonsterManager : MonoBehaviour
                         {
                             //Door is closed, go back to start
                             currentRoom = 7;
-                            moveSfx = 0.8f;
+                            moveSfx = 0.64f;
                             clipToPlay = respawn;
                         }
                         else
@@ -143,7 +141,7 @@ public class MonsterManager : MonoBehaviour
                         {
                             //Move to LDoor
                             currentRoom = 0;
-                            moveSfx = 0.8f;
+                            moveSfx = 0.64f;
                         }
                         break;
 
@@ -157,7 +155,7 @@ public class MonsterManager : MonoBehaviour
                         {
                             //Move to RDoor
                             currentRoom = 1;
-                            moveSfx = 0.8f;
+                            moveSfx = 0.64f;
                         }
                         break;
 
@@ -225,7 +223,7 @@ public class MonsterManager : MonoBehaviour
                 }
                 if (choosePos) currentRoomPosition = Random.Range(0, roomPositions[currentRoom].roomPositions.Count);
                 UpdateMonsterPosition(currentRoom, currentRoomPosition);
-                if (Random.Range(0, 3) == 0 && currentRoom != 0 && currentRoom != 1)
+                if (Random.Range(0, 2) == 0 /*&& currentRoom != 0 && currentRoom != 1*/)
                 {
                     //Play random move sfx
                     switch (Random.Range(0, 3))
@@ -309,15 +307,15 @@ public class MonsterManager : MonoBehaviour
             switch (Random.Range(0, 3))
             {
                 case 0:
-                    audioSource.PlayOneShot(breathing1, 0.8f);
+                    audioSource.PlayOneShot(breathing1, 0.4f);
                     break;
 
                 case 1:
-                    audioSource.PlayOneShot(breathing2, 0.8f);
+                    audioSource.PlayOneShot(breathing2, 0.4f);
                     break;
 
                 case 2:
-                    audioSource.PlayOneShot(breathing3, 0.8f);
+                    audioSource.PlayOneShot(breathing3, 0.4f);
                     break;
             }
             breathTimer = 0.0f;
@@ -328,8 +326,21 @@ public class MonsterManager : MonoBehaviour
     {
         audioSource.Stop();
         audioSource.loop = false;
-        UpdateMonsterPosition(8, 0);
-        //monsterPose.SetTrigger("Jumpscare");
-        audioSource.PlayOneShot(jumpscare, 0.8f);
+        if (!MainMenuScript.jumpscare)
+        {
+            UpdateMonsterPosition(8, 0);
+            audioSource.PlayOneShot(jumpscare, 0.4f);
+        }
+        else
+        {
+            monsterPos.transform.position = new Vector3(0.0f, -5.0f, 0.0f);
+            gameController.winLossText.text = "Boo!";
+        }
+    }
+
+    public void MuteSources()
+    {
+        audioSource.volume = 0;
+        audioSource2.volume = 0;
     }
 }

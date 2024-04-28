@@ -5,11 +5,10 @@ using Unity.VisualScripting;
 using UnityEngine;
 using UnityEngine.SceneManagement;
 using Random = UnityEngine.Random;
+using UnityEngine.UI;
 
 public class GameController : MonoBehaviour
 {
-	public float volumeLevel; // <<<<<<<<<<<<<<<<<<<<<<
-
 	//Lighting https://docs.unity3d.com/Manual/ProgressiveLightmapper-UVOverlap.html
 
 	//Just change volume of all audio sources - combines both
@@ -31,11 +30,17 @@ public class GameController : MonoBehaviour
 	const float doorRotSpeed = 63.41f;
 
 	int power;
-	float powerDrainRate = 5.0f, powerTimer;
+	float powerDrainRate = 6.4f, powerTimer;
 
-	float jumpscareTimer = 1.0f;
+	float jumpscareTimer = 0.64f;
 
 	float gameTimer = 0.0f, gameEnd = 124f;
+	public bool won = false;
+
+	//UI
+	public Text powerText, winLossText, timeText;
+	public Image blackBackground;
+	public Button menuButton;
 
 	// Start is called before the first frame update
 	void Start()
@@ -58,17 +63,35 @@ public class GameController : MonoBehaviour
 		power = 100;
 		powerTimer = 0.0f;
 
-        officeSfx.volume = volumeLevel;
+        officeSfx.volume = MainMenuScript.volumeLevel;
     }
 
     // Update is called once per frame
     void Update()
 	{
 		gameTimer += Time.deltaTime;
-		if (gameTimer > gameEnd)
+		float completed = gameTimer / gameEnd;
+		if (completed < (1.0f / 6.0f))
 		{
-			//Win
+			timeText.text = "12AM";
+        }
+		else
+		{
+			timeText.text = String.Format("{0}AM", (int)(completed * 6));
 		}
+		if (gameTimer > gameEnd && !jumpscareReady && !won)
+		{
+            //Win
+            //Black screen, mute audio, show text
+            blackBackground.color = new Color(blackBackground.color.r, blackBackground.color.g, blackBackground.color.b, 255);
+            officeSfx.volume = 0;
+            monsterManager.MuteSources();
+            winLossText.text = "You win!";
+			menuButton.image.color = new Color(menuButton.image.color.r, menuButton.image.color.g, menuButton.image.color.b, 255);
+			Text menuButtonText = menuButton.GetComponentInChildren<Text>();
+			menuButtonText.color = new Color(menuButtonText.color.r, menuButtonText.color.g, menuButtonText.color.b, 255);
+			won = true;
+        }
 
 		//Jumpscare
 		if (jumpscareReady)
@@ -89,8 +112,15 @@ public class GameController : MonoBehaviour
 					if (jumpscareTimer < 0)
 					{
 						//Lose
-						Application.Quit();
-					}
+						//Black screen, mute audio, show text
+						blackBackground.color = new Color(blackBackground.color.r, blackBackground.color.g, blackBackground.color.b, 255);
+						officeSfx.volume = 0;
+						monsterManager.MuteSources();
+						winLossText.text = "You lose!";
+                        menuButton.image.color = new Color(menuButton.image.color.r, menuButton.image.color.g, menuButton.image.color.b, 255);
+                        Text menuButtonText = menuButton.GetComponentInChildren<Text>();
+                        menuButtonText.color = new Color(menuButtonText.color.r, menuButtonText.color.g, menuButtonText.color.b, 255);
+                    }
 				}
             }
             else
@@ -145,7 +175,10 @@ public class GameController : MonoBehaviour
 		}
 
 		//Power
-		powerTimer += Time.deltaTime;
+		if (!won)
+		{
+			powerTimer += Time.deltaTime;
+		}
 		if (powerTimer >= powerDrainRate)
 		{
 			power--;
@@ -163,6 +196,7 @@ public class GameController : MonoBehaviour
 
 			//Turn off lights
         }
+		powerText.text = String.Format("Power: {0}%", power);
 
 		//Ambience
 		if (!officeSfx.isPlaying)
@@ -223,11 +257,11 @@ public class GameController : MonoBehaviour
 			cameraManager.ToggleCameras();
 			if (camerasUp)
 			{
-				powerDrainRate += 1.0f;
+				powerDrainRate += 1.4f;
 			}
 			else
 			{
-				powerDrainRate -= 1.0f;
+				powerDrainRate -= 1.4f;
 			}
 			camerasUp = !camerasUp;
 		}
@@ -240,12 +274,12 @@ public class GameController : MonoBehaviour
 			if (lDoorClosed)
 			{
 				lDoorOpening = true;
-				powerDrainRate += 1.0f;
+				powerDrainRate += 1.4f;
 			}
 			else
 			{
 				lDoorClosing = true;
-				powerDrainRate -= 1.0f;
+				powerDrainRate -= 1.4f;
 			}
 		}
 	}
@@ -256,13 +290,18 @@ public class GameController : MonoBehaviour
 			if (rDoorClosed)
 			{
 				rDoorOpening = true;
-                powerDrainRate += 1.0f;
+                powerDrainRate += 1.4f;
             }
 			else
 			{
 				rDoorClosing = true;
-                powerDrainRate -= 1.0f;
+                powerDrainRate -= 1.4f;
             }
 		}
 	}
+
+	public void BackToMenu()
+	{
+        SceneManager.LoadScene(0);
+    }
 }

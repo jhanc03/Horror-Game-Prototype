@@ -12,7 +12,7 @@ public class CameraManager : MonoBehaviour
     VideoPlayer cameraStatic;
     CanvasGroup cameraUI;
 
-    const float camRotSpeed = 14.4f;
+    const float camRotSpeed = 24.4f;
     bool cam3Left, cam5Left;
 
     // Start is called before the first frame update
