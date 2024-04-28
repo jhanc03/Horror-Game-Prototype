@@ -181,7 +181,7 @@ public class MonsterManager : MonoBehaviour
 
                     //Cam4
                     case 5:
-                        if (Random.Range(0, 2) == 0)
+                        if (Random.Range(0.0f, 2.0f) <= 1.0f)
                         {
                             //Go to cam 3
                             currentRoom = 4;
@@ -199,7 +199,7 @@ public class MonsterManager : MonoBehaviour
 
                     //Cam5
                     case 6:
-                        if (Random.Range(0, 2) == 0)
+                        if (Random.Range(0.0f, 2.0f) <= 1.0f)
                         {
                             //Go to cam 3
                             currentRoom = 4;
@@ -223,7 +223,7 @@ public class MonsterManager : MonoBehaviour
                 }
                 if (choosePos) currentRoomPosition = Random.Range(0, roomPositions[currentRoom].roomPositions.Count);
                 UpdateMonsterPosition(currentRoom, currentRoomPosition);
-                if (Random.Range(0, 2) == 0 /*&& currentRoom != 0 && currentRoom != 1*/)
+                if (Random.Range(0.0f, 2.0f) <= 1.0f /*&& currentRoom != 0 && currentRoom != 1*/)
                 {
                     //Play random move sfx
                     switch (Random.Range(0, 3))
@@ -260,7 +260,7 @@ public class MonsterManager : MonoBehaviour
         sfxTimer += Time.deltaTime;
         if (sfxTimer >= 8.4f)
         {
-            if (Random.Range(0, 100) <= sfxChance)
+            if (Random.Range(0.0f, 100.0f) <= sfxChance)
             {
                 switch (Random.Range(0, 5))
                 {

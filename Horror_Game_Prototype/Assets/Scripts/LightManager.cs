@@ -5,10 +5,10 @@ using Random = UnityEngine.Random;
 
 public class LightManager : MonoBehaviour
 {
-    struct GameLight
+    class GameLight
     {
         public float minIntensity, maxIntensity, variationSpeed, currentIntensity, targetIntensity;
-        //public bool increasingIntensity;
+        public bool increasingIntensity;
 
         public Light pointLight, spotLight;
 
@@ -19,8 +19,8 @@ public class LightManager : MonoBehaviour
 
             minIntensity = 0.0f;
             maxIntensity = 0.14f;
-            variationSpeed = 140f;
-            //increasingIntensity = true;
+            variationSpeed = 0.84f;
+            increasingIntensity = false;
 
             currentIntensity = pointLight.intensity;
             targetIntensity = Random.Range(minIntensity, maxIntensity);
@@ -29,6 +29,7 @@ public class LightManager : MonoBehaviour
 
     public GameObject lightsGameObject;
     List<GameLight> lights;
+    GameLight light;
 
     // Start is called before the first frame update
     void Start()
@@ -36,6 +37,7 @@ public class LightManager : MonoBehaviour
         lights = new List<GameLight>();
         foreach (Transform transform in lightsGameObject.transform)
         {
+            light = new GameLight(transform);
             lights.Add(new GameLight(transform));
         }
     }
@@ -45,18 +47,26 @@ public class LightManager : MonoBehaviour
     {
         for (int i = 0; i < lights.Count; i++)
         {
-            GameLight light = lights[i];
+            light = lights[i];
             // Update current intensity towards target intensity
-            light.currentIntensity = Mathf.MoveTowards(light.currentIntensity, light.targetIntensity, light.variationSpeed * Time.deltaTime);
+            lights[i].currentIntensity = Mathf.MoveTowards(lights[i].currentIntensity, lights[i].targetIntensity, lights[i].variationSpeed * Time.deltaTime);
 
-            // Apply current intensity to the light
-            //light.pointLight.intensity = light.currentIntensity;
-            //light.spotLight.intensity = light.currentIntensity;
+            // Apply current intensity to the lights[i]
+            lights[i].pointLight.intensity = lights[i].currentIntensity;
+            lights[i].spotLight.intensity = lights[i].currentIntensity;
 
             // If current intensity reaches the target, set a new target
-            if (Mathf.Approximately(light.currentIntensity, light.targetIntensity))
+            if (Mathf.Approximately(lights[i].currentIntensity, lights[i].targetIntensity))
             {
-                light.targetIntensity = Random.Range(light.minIntensity, light.maxIntensity);
+                if (!lights[i].increasingIntensity)
+                {
+                    lights[i].targetIntensity = Random.Range(lights[i].currentIntensity, lights[i].maxIntensity);
+                }
+                else
+                {
+                    lights[i].targetIntensity = Random.Range(lights[i].minIntensity, lights[i].currentIntensity);
+                }
+                lights[i].increasingIntensity = !lights[i].increasingIntensity;
             }
         }
     }
