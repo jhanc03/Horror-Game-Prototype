@@ -1676,7 +1676,11 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 54008d84f8a0c5c4e9f52b08c73ecf36, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  volumeLevel: 1
   powerDown: {fileID: 8300000, guid: c579c131fa77275439d7a794cf3a6d4d, type: 3}
+  amb1: {fileID: 8300000, guid: cc4a03693d7a44cf69a6eb2db0f93b3d, type: 3}
+  amb2: {fileID: 8300000, guid: e93683c9c0a995d48b3f20927db0ac5a, type: 3}
+  amb3: {fileID: 8300000, guid: ab8842b42fcaba04193bd8bc50c78cbf, type: 3}
   lDoor: {fileID: 1048468086}
   rDoor: {fileID: 97576838}
 --- !u!114 &147335207
@@ -1716,6 +1720,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 2a4f67cf777e082408233fad1b65f367, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  volumeLevel: 1
   respawn: {fileID: 8300000, guid: 1bd6e5b4ce3c946f4a3f8f53a207ec93, type: 3}
   breathing1: {fileID: 8300000, guid: ab6850659b1264a8a8de37a637c5507f, type: 3}
   breathing2: {fileID: 8300000, guid: 79a487faa751a46eebd8a8358c7dea4d, type: 3}

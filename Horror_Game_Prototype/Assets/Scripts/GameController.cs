@@ -8,13 +8,19 @@ using Random = UnityEngine.Random;
 
 public class GameController : MonoBehaviour
 {
+	public float volumeLevel; // <<<<<<<<<<<<<<<<<<<<<<
+
 	//Lighting https://docs.unity3d.com/Manual/ProgressiveLightmapper-UVOverlap.html
+
+	//Just change volume of all audio sources - combines both
 
 	CameraManager cameraManager;
 	MonsterManager monsterManager;
 
 	AudioSource officeSfx;
-	public AudioClip powerDown;
+	public AudioClip powerDown, amb1, amb2, amb3;
+	float ambTimer = 0.0f;
+	int lastAmb;
 	bool poweredDown = false;
 
 	//Doors
@@ -29,7 +35,7 @@ public class GameController : MonoBehaviour
 
 	float jumpscareTimer = 1.0f;
 
-	float gameTimer = 0.0f, gameEnd = 240f;
+	float gameTimer = 0.0f, gameEnd = 124f;
 
 	// Start is called before the first frame update
 	void Start()
@@ -49,12 +55,14 @@ public class GameController : MonoBehaviour
 
 		camerasUp = false;
 		jumpscareReady = false;
-		power = 5;
+		power = 100;
 		powerTimer = 0.0f;
-	}
 
-	// Update is called once per frame
-	void Update()
+        officeSfx.volume = volumeLevel;
+    }
+
+    // Update is called once per frame
+    void Update()
 	{
 		gameTimer += Time.deltaTime;
 		if (gameTimer > gameEnd)
@@ -155,6 +163,42 @@ public class GameController : MonoBehaviour
 
 			//Turn off lights
         }
+
+		//Ambience
+		if (!officeSfx.isPlaying)
+		{
+			ambTimer += Time.deltaTime;
+		}
+		if (ambTimer > 4.4f)
+		{
+			switch (Random.Range(0, 3))
+			{
+				case 0:
+					if (lastAmb != 0)
+					{
+						officeSfx.PlayOneShot(amb1, 0.04f);
+                        ambTimer = 0.0f;
+                    }
+					break;
+
+				case 1:
+					if (lastAmb != 1)
+					{
+						officeSfx.PlayOneShot(amb1, 0.04f);
+						ambTimer = 0.0f;
+					}
+                    break;
+
+				case 2:
+					if (lastAmb != 2)
+					{
+						officeSfx.PlayOneShot(amb1, 0.04f);
+						ambTimer = 0.0f;
+					}
+                    break;
+			}
+		}
+
     }
 
 	public bool GetLDoorClosed()

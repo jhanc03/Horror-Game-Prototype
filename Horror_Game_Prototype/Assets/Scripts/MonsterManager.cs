@@ -4,6 +4,8 @@ using UnityEngine;
 
 public class MonsterManager : MonoBehaviour
 {
+    public float volumeLevel;
+
     struct RoomPositions
     {
         public int numPos;
@@ -79,6 +81,9 @@ public class MonsterManager : MonoBehaviour
         currentRoom = 7;
         currentRoomPosition = 1;
         UpdateMonsterPosition(currentRoom, currentRoomPosition);
+
+        audioSource.volume = volumeLevel;
+        audioSource2.volume = volumeLevel;
     }
 
     void Update()
