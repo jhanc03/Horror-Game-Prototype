@@ -53,6 +53,24 @@ public partial class @PlayerInputActions: IInputActionCollection2, IDisposable
                     ""processors"": """",
                     ""interactions"": """",
                     ""initialStateCheck"": false
+                },
+                {
+                    ""name"": ""ToggleLDoorLight"",
+                    ""type"": ""Button"",
+                    ""id"": ""2fd79461-210c-4ef9-bd6b-9976ca724405"",
+                    ""expectedControlType"": ""Button"",
+                    ""processors"": """",
+                    ""interactions"": """",
+                    ""initialStateCheck"": false
+                },
+                {
+                    ""name"": ""ToggleRDoorLight"",
+                    ""type"": ""Button"",
+                    ""id"": ""6aa04e65-7c1b-4963-8c12-117b9ca40f83"",
+                    ""expectedControlType"": ""Button"",
+                    ""processors"": """",
+                    ""interactions"": """",
+                    ""initialStateCheck"": false
                 }
             ],
             ""bindings"": [
@@ -88,6 +106,28 @@ public partial class @PlayerInputActions: IInputActionCollection2, IDisposable
                     ""action"": ""ToggleRightDoor"",
                     ""isComposite"": false,
                     ""isPartOfComposite"": false
+                },
+                {
+                    ""name"": """",
+                    ""id"": ""f4fb8c38-8a50-4cb3-a5e4-02c87dadcd38"",
+                    ""path"": ""<Keyboard>/q"",
+                    ""interactions"": """",
+                    ""processors"": """",
+                    ""groups"": ""Controls"",
+                    ""action"": ""ToggleLDoorLight"",
+                    ""isComposite"": false,
+                    ""isPartOfComposite"": false
+                },
+                {
+                    ""name"": """",
+                    ""id"": ""8b5df5b2-a46e-4f67-ab1b-d3c2d3327faf"",
+                    ""path"": ""<Keyboard>/e"",
+                    ""interactions"": """",
+                    ""processors"": """",
+                    ""groups"": ""Controls"",
+                    ""action"": ""ToggleRDoorLight"",
+                    ""isComposite"": false,
+                    ""isPartOfComposite"": false
                 }
             ]
         }
@@ -105,6 +145,8 @@ public partial class @PlayerInputActions: IInputActionCollection2, IDisposable
         m_Controls_ToggleCameras = m_Controls.FindAction("ToggleCameras", throwIfNotFound: true);
         m_Controls_ToggleLeftDoor = m_Controls.FindAction("ToggleLeftDoor", throwIfNotFound: true);
         m_Controls_ToggleRightDoor = m_Controls.FindAction("ToggleRightDoor", throwIfNotFound: true);
+        m_Controls_ToggleLDoorLight = m_Controls.FindAction("ToggleLDoorLight", throwIfNotFound: true);
+        m_Controls_ToggleRDoorLight = m_Controls.FindAction("ToggleRDoorLight", throwIfNotFound: true);
     }
 
     public void Dispose()
@@ -169,6 +211,8 @@ public partial class @PlayerInputActions: IInputActionCollection2, IDisposable
     private readonly InputAction m_Controls_ToggleCameras;
     private readonly InputAction m_Controls_ToggleLeftDoor;
     private readonly InputAction m_Controls_ToggleRightDoor;
+    private readonly InputAction m_Controls_ToggleLDoorLight;
+    private readonly InputAction m_Controls_ToggleRDoorLight;
     public struct ControlsActions
     {
         private @PlayerInputActions m_Wrapper;
@@ -176,6 +220,8 @@ public partial class @PlayerInputActions: IInputActionCollection2, IDisposable
         public InputAction @ToggleCameras => m_Wrapper.m_Controls_ToggleCameras;
         public InputAction @ToggleLeftDoor => m_Wrapper.m_Controls_ToggleLeftDoor;
         public InputAction @ToggleRightDoor => m_Wrapper.m_Controls_ToggleRightDoor;
+        public InputAction @ToggleLDoorLight => m_Wrapper.m_Controls_ToggleLDoorLight;
+        public InputAction @ToggleRDoorLight => m_Wrapper.m_Controls_ToggleRDoorLight;
         public InputActionMap Get() { return m_Wrapper.m_Controls; }
         public void Enable() { Get().Enable(); }
         public void Disable() { Get().Disable(); }
@@ -194,6 +240,12 @@ public partial class @PlayerInputActions: IInputActionCollection2, IDisposable
             @ToggleRightDoor.started += instance.OnToggleRightDoor;
             @ToggleRightDoor.performed += instance.OnToggleRightDoor;
             @ToggleRightDoor.canceled += instance.OnToggleRightDoor;
+            @ToggleLDoorLight.started += instance.OnToggleLDoorLight;
+            @ToggleLDoorLight.performed += instance.OnToggleLDoorLight;
+            @ToggleLDoorLight.canceled += instance.OnToggleLDoorLight;
+            @ToggleRDoorLight.started += instance.OnToggleRDoorLight;
+            @ToggleRDoorLight.performed += instance.OnToggleRDoorLight;
+            @ToggleRDoorLight.canceled += instance.OnToggleRDoorLight;
         }
 
         private void UnregisterCallbacks(IControlsActions instance)
@@ -207,6 +259,12 @@ public partial class @PlayerInputActions: IInputActionCollection2, IDisposable
             @ToggleRightDoor.started -= instance.OnToggleRightDoor;
             @ToggleRightDoor.performed -= instance.OnToggleRightDoor;
             @ToggleRightDoor.canceled -= instance.OnToggleRightDoor;
+            @ToggleLDoorLight.started -= instance.OnToggleLDoorLight;
+            @ToggleLDoorLight.performed -= instance.OnToggleLDoorLight;
+            @ToggleLDoorLight.canceled -= instance.OnToggleLDoorLight;
+            @ToggleRDoorLight.started -= instance.OnToggleRDoorLight;
+            @ToggleRDoorLight.performed -= instance.OnToggleRDoorLight;
+            @ToggleRDoorLight.canceled -= instance.OnToggleRDoorLight;
         }
 
         public void RemoveCallbacks(IControlsActions instance)
@@ -238,5 +296,7 @@ public partial class @PlayerInputActions: IInputActionCollection2, IDisposable
         void OnToggleCameras(InputAction.CallbackContext context);
         void OnToggleLeftDoor(InputAction.CallbackContext context);
         void OnToggleRightDoor(InputAction.CallbackContext context);
+        void OnToggleLDoorLight(InputAction.CallbackContext context);
+        void OnToggleRDoorLight(InputAction.CallbackContext context);
     }
 }

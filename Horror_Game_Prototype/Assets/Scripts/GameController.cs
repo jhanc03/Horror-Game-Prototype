@@ -15,6 +15,7 @@ public class GameController : MonoBehaviour
 
 	CameraManager cameraManager;
 	MonsterManager monsterManager;
+	LightManager lightManager;
 
 	AudioSource officeSfx;
 	public AudioClip powerDown, amb1, amb2, amb3;
@@ -29,8 +30,10 @@ public class GameController : MonoBehaviour
 		 camerasUp, jumpscareReady, jumpscareSent = false;
 	const float doorRotSpeed = 63.41f;
 
+	//Power
 	int power;
-	float powerDrainRate = 6.4f, powerTimer;
+	float powerDrainRate = 4.4f, powerTimer;
+	bool lDoorLightOn, rDoorLightOn;
 
 	float jumpscareTimer = 0.64f;
 
@@ -49,6 +52,7 @@ public class GameController : MonoBehaviour
 
         cameraManager = GetComponent<CameraManager>();
 		monsterManager = GetComponent<MonsterManager>();
+		lightManager = GetComponent<LightManager>();
 		officeSfx = GameObject.FindGameObjectWithTag("Player").GetComponent<AudioSource>();
 		
 		lDoorClosed = false;
@@ -57,6 +61,9 @@ public class GameController : MonoBehaviour
 		lDoorOpening = false;
 		rDoorClosing = false;
 		rDoorOpening = false;
+
+		lDoorLightOn = false;
+		rDoorLightOn = false;
 
 		camerasUp = false;
 		jumpscareReady = false;
@@ -195,6 +202,7 @@ public class GameController : MonoBehaviour
 			poweredDown = true;
 
 			//Turn off lights
+			lightManager.LightsOff();
         }
 		powerText.text = String.Format("Power: {0}%", power);
 
@@ -257,11 +265,11 @@ public class GameController : MonoBehaviour
 			cameraManager.ToggleCameras();
 			if (camerasUp)
 			{
-				powerDrainRate += 1.4f;
+				powerDrainRate += 0.4f;
 			}
 			else
 			{
-				powerDrainRate -= 1.4f;
+				powerDrainRate -= 0.4f;
 			}
 			camerasUp = !camerasUp;
 		}
@@ -274,12 +282,12 @@ public class GameController : MonoBehaviour
 			if (lDoorClosed)
 			{
 				lDoorOpening = true;
-				powerDrainRate += 1.4f;
+				powerDrainRate += 0.4f;
 			}
 			else
 			{
 				lDoorClosing = true;
-				powerDrainRate -= 1.4f;
+				powerDrainRate -= 0.4f;
 			}
 		}
 	}
@@ -290,17 +298,50 @@ public class GameController : MonoBehaviour
 			if (rDoorClosed)
 			{
 				rDoorOpening = true;
-                powerDrainRate += 1.4f;
+                powerDrainRate += 0.4f;
             }
 			else
 			{
 				rDoorClosing = true;
-                powerDrainRate -= 1.4f;
+                powerDrainRate -= 0.4f;
             }
 		}
 	}
 
-	public void BackToMenu()
+	public void ToggleLDoorLight()
+	{
+        if (!camerasUp && !poweredDown)
+        {
+			lightManager.ToggleLDoorLight();
+			if (lDoorLightOn)
+			{
+                powerDrainRate += 0.4f;
+            }
+			else
+			{
+                powerDrainRate -= 0.4f;
+            }
+            lDoorLightOn = !lDoorLightOn;
+        }
+    }
+    public void ToggleRDoorLight()
+    {
+        if (!camerasUp && !poweredDown)
+        {
+            lightManager.ToggleRDoorLight();
+            if (rDoorLightOn)
+            {
+                powerDrainRate += 0.4f;
+            }
+            else
+            {
+                powerDrainRate -= 0.4f;
+            }
+            rDoorLightOn = !rDoorLightOn;
+        }
+    }
+
+    public void BackToMenu()
 	{
         SceneManager.LoadScene(0);
     }

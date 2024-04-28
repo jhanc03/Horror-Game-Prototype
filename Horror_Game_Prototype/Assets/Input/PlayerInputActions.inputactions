@@ -31,6 +31,24 @@
                     "processors": "",
                     "interactions": "",
                     "initialStateCheck": false
+                },
+                {
+                    "name": "ToggleLDoorLight",
+                    "type": "Button",
+                    "id": "2fd79461-210c-4ef9-bd6b-9976ca724405",
+                    "expectedControlType": "Button",
+                    "processors": "",
+                    "interactions": "",
+                    "initialStateCheck": false
+                },
+                {
+                    "name": "ToggleRDoorLight",
+                    "type": "Button",
+                    "id": "6aa04e65-7c1b-4963-8c12-117b9ca40f83",
+                    "expectedControlType": "Button",
+                    "processors": "",
+                    "interactions": "",
+                    "initialStateCheck": false
                 }
             ],
             "bindings": [
@@ -64,6 +82,28 @@
                     "processors": "",
                     "groups": "Controls",
                     "action": "ToggleRightDoor",
+                    "isComposite": false,
+                    "isPartOfComposite": false
+                },
+                {
+                    "name": "",
+                    "id": "f4fb8c38-8a50-4cb3-a5e4-02c87dadcd38",
+                    "path": "<Keyboard>/q",
+                    "interactions": "",
+                    "processors": "",
+                    "groups": "Controls",
+                    "action": "ToggleLDoorLight",
+                    "isComposite": false,
+                    "isPartOfComposite": false
+                },
+                {
+                    "name": "",
+                    "id": "8b5df5b2-a46e-4f67-ab1b-d3c2d3327faf",
+                    "path": "<Keyboard>/e",
+                    "interactions": "",
+                    "processors": "",
+                    "groups": "Controls",
+                    "action": "ToggleRDoorLight",
                     "isComposite": false,
                     "isPartOfComposite": false
                 }

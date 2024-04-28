@@ -8,20 +8,14 @@ public class MainMenuScript : MonoBehaviour
 {
     public static float volumeLevel;
     public static bool jumpscare;
+    public static int difficulty;
 
     public Slider volumeSlider;
     public Toggle jumpscareToggle;
 
-    // Start is called before the first frame update
-    void Start()
+    public void Start()
     {
-        
-    }
-
-    // Update is called once per frame
-    void Update()
-    {
-        
+        difficulty = 5;
     }
 
     public void StartGame()
@@ -29,5 +23,18 @@ public class MainMenuScript : MonoBehaviour
         volumeLevel = volumeSlider.value;
         jumpscare = jumpscareToggle.isOn;
         SceneManager.LoadScene(1);
+    }
+
+    public void Easy()
+    {
+        difficulty = 5;
+    }
+    public void Moderate()
+    {
+        difficulty = 10;
+    }
+    public void Hard()
+    {
+        difficulty = 15;
     }
 }
