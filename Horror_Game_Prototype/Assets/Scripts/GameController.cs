@@ -14,7 +14,7 @@ public class GameController : MonoBehaviour
 	LightManager lightManager;
 
 	AudioSource officeSfx;
-	public AudioClip powerDown, amb1, amb2, amb3, jumpscareStinger;
+	public AudioClip powerDown, amb1, amb2, amb3, jumpscareStinger, endMusic;
 	float ambTimer = 0.0f;
 	int lastAmb = -1;
 	bool poweredDown = false;
@@ -94,6 +94,7 @@ public class GameController : MonoBehaviour
 			Text menuButtonText = menuButton.GetComponentInChildren<Text>();
 			menuButtonText.color = new Color(menuButtonText.color.r, menuButtonText.color.g, menuButtonText.color.b, 255);
 			won = true;
+			officeSfx.PlayOneShot(endMusic, 0.4f);
         }
 
 		//Jumpscare
@@ -124,7 +125,8 @@ public class GameController : MonoBehaviour
                         menuButton.image.color = new Color(menuButton.image.color.r, menuButton.image.color.g, menuButton.image.color.b, 255);
                         Text menuButtonText = menuButton.GetComponentInChildren<Text>();
                         menuButtonText.color = new Color(menuButtonText.color.r, menuButtonText.color.g, menuButtonText.color.b, 255);
-                    }
+						AudioSource.PlayClipAtPoint(endMusic, new Vector3(1.86f, 1.095f, 0), 0.04f);
+					}
 				}
             }
             else

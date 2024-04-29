@@ -1588,6 +1588,7 @@ MonoBehaviour:
   amb2: {fileID: 8300000, guid: e93683c9c0a995d48b3f20927db0ac5a, type: 3}
   amb3: {fileID: 8300000, guid: ab8842b42fcaba04193bd8bc50c78cbf, type: 3}
   jumpscareStinger: {fileID: 8300000, guid: cc4a4ed1035b64932a6446ec684fea32, type: 3}
+  endMusic: {fileID: 8300000, guid: 45400638a56be7a4ea9c7e920d8410b6, type: 3}
   lDoor: {fileID: 1048468086}
   rDoor: {fileID: 97576838}
   won: 0
