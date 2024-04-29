@@ -76,8 +76,8 @@ public class MonsterManager : MonoBehaviour
         audioSource = monster.GetComponent<AudioSource>();
         audioSource2 = GameObject.FindGameObjectWithTag("SFX").GetComponent<AudioSource>();
 
-        currentRoom = 7;
-        currentRoomPosition = 1;
+        currentRoom = 1;
+        currentRoomPosition = 0;
         UpdateMonsterPosition(currentRoom, currentRoomPosition);
 
         audioSource.volume = MainMenuScript.volumeLevel;
@@ -103,7 +103,7 @@ public class MonsterManager : MonoBehaviour
                             //Door is closed, go back to start
                             currentRoom = 7;
                             moveVolume = 0.64f;
-                            AudioSource.PlayClipAtPoint(hit2, new Vector3(0, 0, -1), 0.64f);
+                            AudioSource.PlayClipAtPoint(hit2, new Vector3(0, 0, -1), 0.54f);
                         }
                         else
                         {
@@ -121,7 +121,7 @@ public class MonsterManager : MonoBehaviour
                             //Door is closed, go back to start
                             currentRoom = 7;
                             moveVolume = 0.64f;
-                            AudioSource.PlayClipAtPoint(hit2, new Vector3(0, 0, 1), 0.64f);
+                            AudioSource.PlayClipAtPoint(hit2, new Vector3(0, 0, 1), 0.54f);
                         }
                         else
                         {
@@ -165,7 +165,7 @@ public class MonsterManager : MonoBehaviour
                         {
                             //Left side - go to cam 1
                             currentRoom = 2;
-                            currentRoomPosition = 1;
+                            currentRoomPosition = 0;
                             choosePos = false;
                             moveVolume = 0.6f;
                         }
@@ -173,7 +173,7 @@ public class MonsterManager : MonoBehaviour
                         {
                             //Right side - go to cam 2
                             currentRoom = 3;
-                            currentRoomPosition = 1;
+                            currentRoomPosition = 0;
                             choosePos = false;
                             moveVolume = 0.6f;
                         }
@@ -221,12 +221,12 @@ public class MonsterManager : MonoBehaviour
                         moveVolume = 0.2f;
                         break;
                 }
-                if (choosePos) currentRoomPosition = Random.Range(0, roomPositions[currentRoom].roomPositions.Count);
+                if (choosePos) currentRoomPosition = (int)Mathf.Floor(Random.Range(0.0f, roomPositions[currentRoom].roomPositions.Count));
                 UpdateMonsterPosition(currentRoom, currentRoomPosition);
                 if (Random.Range(0.0f, 2.0f) <= 1.0f /*&& currentRoom != 0 && currentRoom != 1*/)
                 {
                     //Play random move sfx
-                    switch (Random.Range(0, 3))
+                    switch (Mathf.Floor(Random.Range(0.0f, 3.0f)))
                     {
                         case 0:
                             clipToPlay = snarl1;
@@ -255,7 +255,7 @@ public class MonsterManager : MonoBehaviour
         {
             if (Random.Range(0.0f, 100.0f) <= sfxChance)
             {
-                switch (Random.Range(0, 5))
+                switch (Mathf.Floor(Random.Range(0.0f, 5.0f)))
                 {
                     case 0:
                         clipToPlay = hit1;
@@ -297,7 +297,7 @@ public class MonsterManager : MonoBehaviour
         breathTimer += Time.deltaTime;
         if (!audioSource.isPlaying && breathTimer >= 6.4f)
         {
-            switch (Random.Range(0, 3))
+            switch (Mathf.Floor(Random.Range(0.0f, 3.0f)))
             {
                 case 0:
                     audioSource.PlayOneShot(breathing1, 0.4f);

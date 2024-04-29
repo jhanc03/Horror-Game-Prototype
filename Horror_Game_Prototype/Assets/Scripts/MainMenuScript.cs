@@ -7,29 +7,31 @@ using UnityEngine.UI;
 public class MainMenuScript : MonoBehaviour
 {
     public static float volumeLevel;
-    public static bool jumpscare;
+    public static bool jumpscare, flashingLights;
     public static int difficulty;
 
     AudioSource musicSource;
 
     public Slider volumeSlider;
-    public Toggle jumpscareToggle;
+    public Toggle jumpscareToggle, flashingLightsToggle;
 
     public void Start()
     {
         difficulty = 5;
         musicSource = GetComponent<AudioSource>();
-    }
+		musicSource.PlayOneShot(musicSource.clip, volumeLevel);
+	}
 
     public void Update()
     {
-        musicSource.volume = volumeSlider.value / 0.64f;
+        musicSource.volume = volumeSlider.value / 1.4f;
     }
 
     public void StartGame()
     {
         volumeLevel = volumeSlider.value;
         jumpscare = jumpscareToggle.isOn;
+        flashingLights = flashingLightsToggle.isOn;
         SceneManager.LoadScene(1);
     }
     public void QuitGame()

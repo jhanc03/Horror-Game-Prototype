@@ -14,7 +14,7 @@ public class GameController : MonoBehaviour
 	LightManager lightManager;
 
 	AudioSource officeSfx;
-	public AudioClip powerDown, amb1, amb2, amb3;
+	public AudioClip powerDown, amb1, amb2, amb3, jumpscareStinger;
 	float ambTimer = 0.0f;
 	int lastAmb = -1;
 	bool poweredDown = false;
@@ -106,6 +106,7 @@ public class GameController : MonoBehaviour
 				{
 					monsterManager.MonsterJumpscare();
 					cameraManager.PlayerLookAtJumpscare();
+					officeSfx.PlayOneShot(jumpscareStinger, 0.4f);
 
 					jumpscareSent = true;
 				}

@@ -51,7 +51,7 @@ public class LightManager : MonoBehaviour
     {
         for (int i = 0; i < lights.Count; i++)
         {
-            if (lights[i].on)
+            if (lights[i].on && !MainMenuScript.flashingLights)
             {
                 lights[i].currentIntensity = Mathf.MoveTowards(lights[i].currentIntensity, lights[i].targetIntensity, lights[i].variationSpeed * Time.deltaTime);
 
@@ -77,15 +77,31 @@ public class LightManager : MonoBehaviour
     public void ToggleLDoorLight()
     {
         lights[0].on = !lights[0].on;
-        lights[0].pointLight.intensity = 0.0f;
-        lights[0].spotLight.intensity = 0.0f;
+        if (lights[0].on)
+        {
+			lights[0].pointLight.intensity = 0.14f;
+			lights[0].spotLight.intensity = 0.14f;
+		}
+        else
+        {
+			lights[0].pointLight.intensity = 0.0f;
+			lights[0].spotLight.intensity = 0.0f;
+		}
     }
     public void ToggleRDoorLight()
     {
         lights[1].on = !lights[1].on;
-        lights[1].pointLight.intensity = 0.0f;
-        lights[1].spotLight.intensity = 0.0f;
-    }
+		if (lights[1].on)
+		{
+			lights[1].pointLight.intensity = 0.14f;
+			lights[1].spotLight.intensity = 0.14f;
+		}
+		else
+		{
+			lights[1].pointLight.intensity = 0.0f;
+			lights[1].spotLight.intensity = 0.0f;
+		}
+	}
 
     public void LightsOff()
     {
