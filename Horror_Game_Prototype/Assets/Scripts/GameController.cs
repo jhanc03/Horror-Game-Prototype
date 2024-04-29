@@ -9,10 +9,6 @@ using UnityEngine.UI;
 
 public class GameController : MonoBehaviour
 {
-	//Lighting https://docs.unity3d.com/Manual/ProgressiveLightmapper-UVOverlap.html
-
-	//Just change volume of all audio sources - combines both
-
 	CameraManager cameraManager;
 	MonsterManager monsterManager;
 	LightManager lightManager;
@@ -20,7 +16,7 @@ public class GameController : MonoBehaviour
 	AudioSource officeSfx;
 	public AudioClip powerDown, amb1, amb2, amb3;
 	float ambTimer = 0.0f;
-	int lastAmb;
+	int lastAmb = -1;
 	bool poweredDown = false;
 
 	//Doors
@@ -35,9 +31,9 @@ public class GameController : MonoBehaviour
 	float powerDrainRate = 4.4f, powerTimer;
 	bool lDoorLightOn, rDoorLightOn;
 
-	float jumpscareTimer = 0.64f;
+	float jumpscareTimer = 2.04f;
 
-	float gameTimer = 0.0f, gameEnd = 124f;
+	float gameTimer = 0.0f, gameEnd = 244f;
 	public bool won = false;
 
 	//UI
@@ -213,29 +209,32 @@ public class GameController : MonoBehaviour
 		}
 		if (ambTimer > 4.4f)
 		{
-			switch (Random.Range(0, 3))
+			switch (Mathf.Floor(Random.Range(0.0f, 3.0f)))
 			{
 				case 0:
 					if (lastAmb != 0)
 					{
 						officeSfx.PlayOneShot(amb1, 0.04f);
                         ambTimer = 0.0f;
+						lastAmb = 0;
                     }
 					break;
 
 				case 1:
 					if (lastAmb != 1)
 					{
-						officeSfx.PlayOneShot(amb1, 0.04f);
+						officeSfx.PlayOneShot(amb2, 0.04f);
 						ambTimer = 0.0f;
+						lastAmb = 1;
 					}
                     break;
 
 				case 2:
 					if (lastAmb != 2)
 					{
-						officeSfx.PlayOneShot(amb1, 0.04f);
+						officeSfx.PlayOneShot(amb3, 0.04f);
 						ambTimer = 0.0f;
+						lastAmb = 2;
 					}
                     break;
 			}

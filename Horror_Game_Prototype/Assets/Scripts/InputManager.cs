@@ -1,5 +1,6 @@
 using System.Collections;
 using System.Collections.Generic;
+using Unity.VisualScripting;
 using UnityEngine;
 using UnityEngine.InputSystem;
 
@@ -8,7 +9,7 @@ public class InputManager : MonoBehaviour
     GameController gameController;
 
     public PlayerInputActions playerControls;
-    private InputAction toggleCameras, toggleLeftDoor, toggleRightDoor, toggleLDoorLight, toggleRDoorLight;
+    private InputAction toggleCameras, toggleLeftDoor, toggleRightDoor, toggleLDoorLight, toggleRDoorLight, quit;
 
     private void Awake()
     {
@@ -36,6 +37,10 @@ public class InputManager : MonoBehaviour
         toggleRDoorLight = playerControls.Controls.ToggleRDoorLight;
         toggleRDoorLight.Enable();
         toggleRDoorLight.performed += ToggleRDoorLight;
+
+        quit = playerControls.Controls.Quit;
+        quit.Enable();
+        quit.performed += Quit;
     }
 
     private void OnDisable()
@@ -45,6 +50,7 @@ public class InputManager : MonoBehaviour
         toggleRightDoor.Disable();
         toggleLDoorLight.Disable();
         toggleRDoorLight.Disable();
+        quit.Disable();
     }
 
     // Start is called before the first frame update
@@ -72,5 +78,9 @@ public class InputManager : MonoBehaviour
     private void ToggleRDoorLight(InputAction.CallbackContext context)
     {
         gameController.ToggleRDoorLight();
+    }
+    private void Quit(InputAction.CallbackContext context)
+    {
+        gameController.BackToMenu();
     }
 }

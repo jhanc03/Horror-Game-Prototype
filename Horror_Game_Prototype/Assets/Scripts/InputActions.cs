@@ -71,6 +71,15 @@ public partial class @PlayerInputActions: IInputActionCollection2, IDisposable
                     ""processors"": """",
                     ""interactions"": """",
                     ""initialStateCheck"": false
+                },
+                {
+                    ""name"": ""Quit"",
+                    ""type"": ""Button"",
+                    ""id"": ""645d2d59-c9d2-4287-94e9-4868f42180be"",
+                    ""expectedControlType"": ""Button"",
+                    ""processors"": """",
+                    ""interactions"": """",
+                    ""initialStateCheck"": false
                 }
             ],
             ""bindings"": [
@@ -128,6 +137,17 @@ public partial class @PlayerInputActions: IInputActionCollection2, IDisposable
                     ""action"": ""ToggleRDoorLight"",
                     ""isComposite"": false,
                     ""isPartOfComposite"": false
+                },
+                {
+                    ""name"": """",
+                    ""id"": ""60435ee4-e895-4bc7-a770-1753c5f1c3c2"",
+                    ""path"": ""<Keyboard>/escape"",
+                    ""interactions"": """",
+                    ""processors"": """",
+                    ""groups"": ""Controls"",
+                    ""action"": ""Quit"",
+                    ""isComposite"": false,
+                    ""isPartOfComposite"": false
                 }
             ]
         }
@@ -147,6 +167,7 @@ public partial class @PlayerInputActions: IInputActionCollection2, IDisposable
         m_Controls_ToggleRightDoor = m_Controls.FindAction("ToggleRightDoor", throwIfNotFound: true);
         m_Controls_ToggleLDoorLight = m_Controls.FindAction("ToggleLDoorLight", throwIfNotFound: true);
         m_Controls_ToggleRDoorLight = m_Controls.FindAction("ToggleRDoorLight", throwIfNotFound: true);
+        m_Controls_Quit = m_Controls.FindAction("Quit", throwIfNotFound: true);
     }
 
     public void Dispose()
@@ -213,6 +234,7 @@ public partial class @PlayerInputActions: IInputActionCollection2, IDisposable
     private readonly InputAction m_Controls_ToggleRightDoor;
     private readonly InputAction m_Controls_ToggleLDoorLight;
     private readonly InputAction m_Controls_ToggleRDoorLight;
+    private readonly InputAction m_Controls_Quit;
     public struct ControlsActions
     {
         private @PlayerInputActions m_Wrapper;
@@ -222,6 +244,7 @@ public partial class @PlayerInputActions: IInputActionCollection2, IDisposable
         public InputAction @ToggleRightDoor => m_Wrapper.m_Controls_ToggleRightDoor;
         public InputAction @ToggleLDoorLight => m_Wrapper.m_Controls_ToggleLDoorLight;
         public InputAction @ToggleRDoorLight => m_Wrapper.m_Controls_ToggleRDoorLight;
+        public InputAction @Quit => m_Wrapper.m_Controls_Quit;
         public InputActionMap Get() { return m_Wrapper.m_Controls; }
         public void Enable() { Get().Enable(); }
         public void Disable() { Get().Disable(); }
@@ -246,6 +269,9 @@ public partial class @PlayerInputActions: IInputActionCollection2, IDisposable
             @ToggleRDoorLight.started += instance.OnToggleRDoorLight;
             @ToggleRDoorLight.performed += instance.OnToggleRDoorLight;
             @ToggleRDoorLight.canceled += instance.OnToggleRDoorLight;
+            @Quit.started += instance.OnQuit;
+            @Quit.performed += instance.OnQuit;
+            @Quit.canceled += instance.OnQuit;
         }
 
         private void UnregisterCallbacks(IControlsActions instance)
@@ -265,6 +291,9 @@ public partial class @PlayerInputActions: IInputActionCollection2, IDisposable
             @ToggleRDoorLight.started -= instance.OnToggleRDoorLight;
             @ToggleRDoorLight.performed -= instance.OnToggleRDoorLight;
             @ToggleRDoorLight.canceled -= instance.OnToggleRDoorLight;
+            @Quit.started -= instance.OnQuit;
+            @Quit.performed -= instance.OnQuit;
+            @Quit.canceled -= instance.OnQuit;
         }
 
         public void RemoveCallbacks(IControlsActions instance)
@@ -298,5 +327,6 @@ public partial class @PlayerInputActions: IInputActionCollection2, IDisposable
         void OnToggleRightDoor(InputAction.CallbackContext context);
         void OnToggleLDoorLight(InputAction.CallbackContext context);
         void OnToggleRDoorLight(InputAction.CallbackContext context);
+        void OnQuit(InputAction.CallbackContext context);
     }
 }
