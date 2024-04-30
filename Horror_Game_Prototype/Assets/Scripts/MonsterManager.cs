@@ -76,8 +76,8 @@ public class MonsterManager : MonoBehaviour
         audioSource = monster.GetComponent<AudioSource>();
         audioSource2 = GameObject.FindGameObjectWithTag("SFX").GetComponent<AudioSource>();
 
-        currentRoom = 1;
-        currentRoomPosition = 0;
+        currentRoom = 7;
+        currentRoomPosition = 1;
         UpdateMonsterPosition(currentRoom, currentRoomPosition);
 
         audioSource.volume = MainMenuScript.volumeLevel;
@@ -322,7 +322,7 @@ public class MonsterManager : MonoBehaviour
         if (!MainMenuScript.jumpscare)
         {
             UpdateMonsterPosition(8, 0);
-            audioSource.PlayOneShot(jumpscare, 0.4f);
+            audioSource.PlayOneShot(jumpscare, 0.48f);
         }
         else
         {

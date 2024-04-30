@@ -107,7 +107,7 @@ public class GameController : MonoBehaviour
 				{
 					monsterManager.MonsterJumpscare();
 					cameraManager.PlayerLookAtJumpscare();
-					officeSfx.PlayOneShot(jumpscareStinger, 0.4f);
+					officeSfx.PlayOneShot(jumpscareStinger, 0.48f);
 
 					jumpscareSent = true;
 				}
@@ -161,7 +161,7 @@ public class GameController : MonoBehaviour
 			if (rDoorClosing)
 			{
 				rDoor.Rotate(Vector3.up, -(doorRotSpeed * Time.deltaTime));
-				if (rDoor.localEulerAngles.y > 0.0f && rDoor.localEulerAngles.y < 1.0f)
+				if (rDoor.localEulerAngles.y > 0.0f && rDoor.localEulerAngles.y < 3.0f)
 				{
 					rDoor.localEulerAngles = Vector3.zero;
 					rDoorClosing = false;

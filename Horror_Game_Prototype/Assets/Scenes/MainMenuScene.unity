@@ -2974,7 +2974,7 @@ RectTransform:
   m_AnchorMin: {x: 0.5, y: 1}
   m_AnchorMax: {x: 0.5, y: 1}
   m_AnchoredPosition: {x: 700, y: -380}
-  m_SizeDelta: {x: 500, y: 400}
+  m_SizeDelta: {x: 500, y: 450}
   m_Pivot: {x: 0.5, y: 1}
 --- !u!114 &1995182708
 MonoBehaviour:
@@ -3020,7 +3020,9 @@ MonoBehaviour:
     W
     - Toggle Cameras
 
-    Click camera icons to switch to them'
+    Click camera icons to switch to them
+
+    Esc - Quit'
 --- !u!222 &1995182709
 CanvasRenderer:
   m_ObjectHideFlags: 0
