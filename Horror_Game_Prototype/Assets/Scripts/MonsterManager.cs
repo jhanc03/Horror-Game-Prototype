@@ -107,7 +107,7 @@ public class MonsterManager : MonoBehaviour
                         }
                         else
                         {
-                            //Death >:)
+                            //Jumpscare
                             jumpscareReady = true;
                             gameController.JumpscareReady();
                         }    
@@ -125,7 +125,7 @@ public class MonsterManager : MonoBehaviour
                         }
                         else
                         {
-                            //Death >:)
+                            //Jumpscare
                             jumpscareReady = true;
                             gameController.JumpscareReady();
                         }
